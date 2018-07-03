@@ -1,32 +1,34 @@
+%%% author: Jason Leung
+
 clear;
 tic
-[a,b,c]=xlsread('meo_170106_16');%µ¼ÈëÆøÏóÕ¾µÄ¾­Î³¶È×ø±ê¡¢·çËÙ·çÏòµÈÊı¾İ
-y=readtable('beijing_17_01_18_05-20_aq.csv');%µ¼Èë±±¾©ÀúÊ·¿ÕÆøÖÊÁ¿Êı¾İ£¬°üº¬NO2£¬CO£¬SO2
+[a,b,c]=xlsread('meo_170106_16');%å¯¼å…¥æ°”è±¡ç«™çš„ç»çº¬åº¦åæ ‡ã€é£é€Ÿé£å‘ç­‰æ•°æ®
+y=readtable('beijing_17_01_18_05-20_aq.csv');%å¯¼å…¥åŒ—äº¬å†å²ç©ºæ°”è´¨é‡æ•°æ®ï¼ŒåŒ…å«NO2ï¼ŒCOï¼ŒSO2
 aqi_time_index=table2cell(unique(y(:,2)));
-x=readtable('beijing_17_01_18_05-20_meo_with_weather.csv');%µ¼Èë±±¾©ÀúÊ·ÆøÏóÊı¾İ£¬°üº¬ÌìÆø
+x=readtable('beijing_17_01_18_05-20_meo_with_weather.csv');%å¯¼å…¥åŒ—äº¬å†å²æ°”è±¡æ•°æ®ï¼ŒåŒ…å«å¤©æ°”
 x=table2cell(x);
-meo_time_index=unique(x(:,4));%»ñÈ¡Î¨Ò»µÄutc_timeÊ±¼ä´Á
+meo_time_index=unique(x(:,4));%è·å–å”¯ä¸€çš„utc_timeæ—¶é—´æˆ³
 toc
 
 k=1;
 g=1;
 j=1;
 tic
-aqi_utc_time=x(2,4);%³õÊ¼»¯µÚÒ»¸öÆ¥ÅäµÄutc_time
-L=cell(18,11,100);%Éú³É8782¸ö18ĞĞ£¬11ÁĞµÄÔª°ûÊı¾İ£¬×¢ÒâĞĞÁĞÒªµ÷»»¡ª¡ª£¨ĞĞ£¬ÁĞ£¬Ôª°û¸öÊı£©
-for i=2:size(x,1) %¶Ô17-18ÄêµÄÆøÏó¹Û²âÕ¾Êı¾İ±íÀïÃæÃ¿Ò»ĞĞÓëÉè¶¨µÄutc_time½øĞĞÆ¥Åä
-    if mod(i,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+aqi_utc_time=x(2,4);%åˆå§‹åŒ–ç¬¬ä¸€ä¸ªåŒ¹é…çš„utc_time
+L=cell(18,11,100);%ç”Ÿæˆ8782ä¸ª18è¡Œï¼Œ11åˆ—çš„å…ƒèƒæ•°æ®ï¼Œæ³¨æ„è¡Œåˆ—è¦è°ƒæ¢â€”â€”ï¼ˆè¡Œï¼Œåˆ—ï¼Œå…ƒèƒä¸ªæ•°ï¼‰
+for i=2:size(x,1) %å¯¹17-18å¹´çš„æ°”è±¡è§‚æµ‹ç«™æ•°æ®è¡¨é‡Œé¢æ¯ä¸€è¡Œä¸è®¾å®šçš„utc_timeè¿›è¡ŒåŒ¹é…
+    if mod(i,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
        i  
     end
-    if strcmp(cell2mat(x(i,4)),cell2mat(aqi_utc_time)) %Èç¹û¸ÃĞĞµÚ4ÁĞµÄutc_timeÓëÔ¤ÏÈÉè¶¨ºÃµÄutc_timeÆ¥ÅäÉÏ£¬ÔòÖ´ĞĞÈçÏÂ²Ù×÷
-        L(j,1:10,k)=x(i,1:10); %½«Ê±¼ä´ÁÆ¥ÅäÉÏµÄ¼ÇÂ¼¸´ÖÆµ½µÚk¸öÔª°ûÊı×éÀï£¬ĞĞÊÇ¼ÇÂ¼£¬ÁĞÊÇ²»Í¬µÄÊı¾İÈçutc_time,stationµÈ
-        j=j+1;%¼ÇÂ¼Ñ­»·´ÎÊı£¬²¢ÇÒÓÉÓÚÃ¿¸öÔª°û¶¼ÊÇ´ÓµÚÒ»ĞĞ¿ªÊ¼È»ºóµ½µÚÊ®°ËĞĞ£¬ËùÒÔjÓÃÓÚ¿ØÖÆ¸´ÖÆµÄ¼ÇÂ¼ÔÚÔª°ûÊı×éÖĞµÄÎ»ÖÃ
-    else %Èç¹ûÆ¥Åä²»ÉÏ
+    if strcmp(cell2mat(x(i,4)),cell2mat(aqi_utc_time)) %å¦‚æœè¯¥è¡Œç¬¬4åˆ—çš„utc_timeä¸é¢„å…ˆè®¾å®šå¥½çš„utc_timeåŒ¹é…ä¸Šï¼Œåˆ™æ‰§è¡Œå¦‚ä¸‹æ“ä½œ
+        L(j,1:10,k)=x(i,1:10); %å°†æ—¶é—´æˆ³åŒ¹é…ä¸Šçš„è®°å½•å¤åˆ¶åˆ°ç¬¬kä¸ªå…ƒèƒæ•°ç»„é‡Œï¼Œè¡Œæ˜¯è®°å½•ï¼Œåˆ—æ˜¯ä¸åŒçš„æ•°æ®å¦‚utc_time,stationç­‰
+        j=j+1;%è®°å½•å¾ªç¯æ¬¡æ•°ï¼Œå¹¶ä¸”ç”±äºæ¯ä¸ªå…ƒèƒéƒ½æ˜¯ä»ç¬¬ä¸€è¡Œå¼€å§‹ç„¶ååˆ°ç¬¬åå…«è¡Œï¼Œæ‰€ä»¥jç”¨äºæ§åˆ¶å¤åˆ¶çš„è®°å½•åœ¨å…ƒèƒæ•°ç»„ä¸­çš„ä½ç½®
+    else %å¦‚æœåŒ¹é…ä¸ä¸Š
         %L(i-1,1:10,k)=x(i,1:10);
-        aqi_utc_time=x(i,4);%Èç¹ûÆ¥Åä²»ÉÏ£¬ÓÉÓÚÌáÇ°ÒÑ¾­¶Ôutc_time½øĞĞÁËÅÅĞò£¬Òò´ËËµÃ÷³öÏÖÁËĞÂµÄÊ±¼ä´Á£¬´ËÊ±¾ÍÒª¸ü¸ÄÖ®Ç°utcµÄÄ¬ÈÏÖµ
-        k=k+1;%ÓÉÓÚ³öÏÖÁËĞÂµÄÊ±¼ä´Á£¬Òò´ËÒªÓÃÒ»¸öĞÂµÄ¶şÎ¬Ôª°ûÊı×éÖØĞÂ½øĞĞ¼ÇÂ¼
-        L(1,1:10,k)=x(i,1:10);%½«ÕâÌõ¼ÇÂ¼·ÅÖÃµ½ĞÂµÄ¶şÎ¬Ôª°ûÊı×éÀïÃæ£¬²¢ÇÒÕâÒ»ÌõÊÇµÚÒ»Ìõ¼ÇÂ¼£¬Òò´ËÊÇ¡°1¡±
-        j=2;%ºóÃæµÄÃ¿Ò»ÌõĞÂµÄÆ¥Åä¼ÇÂ¼¶¼ÊÇ´Ó2¿ªÊ¼Â¼Èë
+        aqi_utc_time=x(i,4);%å¦‚æœåŒ¹é…ä¸ä¸Šï¼Œç”±äºæå‰å·²ç»å¯¹utc_timeè¿›è¡Œäº†æ’åºï¼Œå› æ­¤è¯´æ˜å‡ºç°äº†æ–°çš„æ—¶é—´æˆ³ï¼Œæ­¤æ—¶å°±è¦æ›´æ”¹ä¹‹å‰utcçš„é»˜è®¤å€¼
+        k=k+1;%ç”±äºå‡ºç°äº†æ–°çš„æ—¶é—´æˆ³ï¼Œå› æ­¤è¦ç”¨ä¸€ä¸ªæ–°çš„äºŒç»´å…ƒèƒæ•°ç»„é‡æ–°è¿›è¡Œè®°å½•
+        L(1,1:10,k)=x(i,1:10);%å°†è¿™æ¡è®°å½•æ”¾ç½®åˆ°æ–°çš„äºŒç»´å…ƒèƒæ•°ç»„é‡Œé¢ï¼Œå¹¶ä¸”è¿™ä¸€æ¡æ˜¯ç¬¬ä¸€æ¡è®°å½•ï¼Œå› æ­¤æ˜¯â€œ1â€
+        j=2;%åé¢çš„æ¯ä¸€æ¡æ–°çš„åŒ¹é…è®°å½•éƒ½æ˜¯ä»2å¼€å§‹å½•å…¥
     end
     
 end
@@ -34,87 +36,87 @@ toc
 
 temp_L_1=L(:,:,1);
 
-%%%%%%%%¼ÆËã·Ç¿ÕĞĞÊıÄ¿
+%%%%%%%%è®¡ç®—éç©ºè¡Œæ•°ç›®
 
 
 
-%%¼ÇµÃ´ò¿ªknn_interplote_weatherµÄmÎÄ¼ş£¬ÒòÎªÒªµ÷ÓÃÕâ¸öº¯Êı
+%%è®°å¾—æ‰“å¼€knn_interplote_weatherçš„mæ–‡ä»¶ï¼Œå› ä¸ºè¦è°ƒç”¨è¿™ä¸ªå‡½æ•°
 tic
-[d,~,~]=xlsread('station_AQI');%µ¼Èë¿ÕÆøÖÊÁ¿Õ¾µÄ¾­Î³¶È×ø±ê
+[d,~,~]=xlsread('station_AQI');%å¯¼å…¥ç©ºæ°”è´¨é‡ç«™çš„ç»çº¬åº¦åæ ‡
 O=cell(35,6,size(L,3)-7);
 for i=1:size(L,3)
       
             i  
        
        if i~=8226&&i~=8955&&i~=10724&&i~=10741&&i~=10780 ... 
-               &&i~=10903&&i~=10987%%µ±Ìì¸ÃĞ¡Ê±µÄÆøÏóÊı¾İ²»ÍêÕû
+               &&i~=10903&&i~=10987%%å½“å¤©è¯¥å°æ—¶çš„æ°”è±¡æ•°æ®ä¸å®Œæ•´
            %temp_meo=[cell2mat(L(:,2,i)) cell2mat(L(:,3,i)) cell2mat(L(:,10,i)) cell2mat(L(:,5,i)) cell2mat(L(:,6,i)) cell2mat(L(:,7,i)) cell2mat(L(:,8,i)) cell2mat(L(:,9,i))];
            temp_meo=[L(:,2,i) L(:,3,i) L(:,10,i) L(:,5,i) L(:,6,i) L(:,7,i) L(:,8,i) L(:,9,i)];
            W=knn_interplote_weather_without_encoding(temp_meo,d);
-           O(1:35,2:10,i)=W(1:35,1:9,1); %%%½«¸ÃĞ¡Ê±µÄÌìÆø×´¿ö¸³Öµµ½Ã¿Ò»¸ö¿ÕÆøÖÊÁ¿¹Û²âÕ¾
+           O(1:35,2:10,i)=W(1:35,1:9,1); %%%å°†è¯¥å°æ—¶çš„å¤©æ°”çŠ¶å†µèµ‹å€¼åˆ°æ¯ä¸€ä¸ªç©ºæ°”è´¨é‡è§‚æµ‹ç«™
        end
 end
 toc
 
-%%½«utc_timeÊ±¼ä´Á°´ÕÕË³Ğò´ÓL±í¸´ÖÆµ½P±íµÄµÚÒ»ĞĞµÚÒ»ÁĞ
+%%å°†utc_timeæ—¶é—´æˆ³æŒ‰ç…§é¡ºåºä»Lè¡¨å¤åˆ¶åˆ°Pè¡¨çš„ç¬¬ä¸€è¡Œç¬¬ä¸€åˆ—
  P=O;
 for i=1:size(L,3)
 P(1,1,i)=L(1,4,i);
 end
 
-%%½«¿ÕÆø¹Û²âÕ¾µÄÃû³Æ¼ÓÈëµ½P±íµÄµÚ11ÁĞ
-[d,e,f]=xlsread('station_AQI');%µ¼Èë¿ÕÆøÖÊÁ¿Õ¾µÄ¾­Î³¶È×ø±ê
+%%å°†ç©ºæ°”è§‚æµ‹ç«™çš„åç§°åŠ å…¥åˆ°Pè¡¨çš„ç¬¬11åˆ—
+[d,e,f]=xlsread('station_AQI');%å¯¼å…¥ç©ºæ°”è´¨é‡ç«™çš„ç»çº¬åº¦åæ ‡
 for i=1:size(L,3)
     if i~=8226&&i~=8955&&i~=10724&&i~=10741&&i~=10780 ... 
-               &&i~=10903&&i~=10987%%µ±Ìì¸ÃĞ¡Ê±µÄÆøÏóÊı¾İ²»ÍêÕû
+               &&i~=10903&&i~=10987%%å½“å¤©è¯¥å°æ—¶çš„æ°”è±¡æ•°æ®ä¸å®Œæ•´
      P(:,11,i)=e(2:size(P(:,:,i),1)+1,1);
     end
 end
 
-%%¶Ô±±¾©aqi ÀúÊ·Êı¾İµÄ×Ü±í°´ÕÕÊ±¼ä´Á½øĞĞ·Ö×é
+%%å¯¹åŒ—äº¬aqi å†å²æ•°æ®çš„æ€»è¡¨æŒ‰ç…§æ—¶é—´æˆ³è¿›è¡Œåˆ†ç»„
 k=1;
 g=1;
 j=1;
 
-aqi_utc_time=y(1,2);%³õÊ¼»¯µÚÒ»¸öÆ¥ÅäµÄutc_time
-aqi=cell(35,size(y,2),200);%Éú³É6511¸ö35ĞĞ£¬12ÁĞµÄÔª°ûÊı¾İ£¬×¢ÒâĞĞÁĞÒªµ÷»»¡ª¡ª£¨ĞĞ£¬ÁĞ£¬Ôª°û¸öÊı£©
+aqi_utc_time=y(1,2);%åˆå§‹åŒ–ç¬¬ä¸€ä¸ªåŒ¹é…çš„utc_time
+aqi=cell(35,size(y,2),200);%ç”Ÿæˆ6511ä¸ª35è¡Œï¼Œ12åˆ—çš„å…ƒèƒæ•°æ®ï¼Œæ³¨æ„è¡Œåˆ—è¦è°ƒæ¢â€”â€”ï¼ˆè¡Œï¼Œåˆ—ï¼Œå…ƒèƒä¸ªæ•°ï¼‰
 tic
- for i=1:size(y,1) %¶Ô17-18ÄêµÄÆøÏó¹Û²âÕ¾Êı¾İ±íÀïÃæÃ¿Ò»ĞĞÓëÉè¶¨µÄutc_time½øĞĞÆ¥Åä
+ for i=1:size(y,1) %å¯¹17-18å¹´çš„æ°”è±¡è§‚æµ‹ç«™æ•°æ®è¡¨é‡Œé¢æ¯ä¸€è¡Œä¸è®¾å®šçš„utc_timeè¿›è¡ŒåŒ¹é…
   
-    if mod(i,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+    if mod(i,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
        i  
     end
-    if isequal(table2cell(y(i,2)),table2cell(aqi_utc_time)) %Èç¹û¸ÃĞĞµÚ4ÁĞµÄutc_timeÓëÔ¤ÏÈÉè¶¨ºÃµÄutc_timeÆ¥ÅäÉÏ£¬ÔòÖ´ĞĞÈçÏÂ²Ù×÷
-        aqi(j,1:size(y,2),k)=table2cell(y(i,1:size(y,2))); %½«Ê±¼ä´ÁÆ¥ÅäÉÏµÄ¼ÇÂ¼¸´ÖÆµ½µÚk¸öÔª°ûÊı×éÀï£¬ĞĞÊÇ¼ÇÂ¼£¬ÁĞÊÇ²»Í¬µÄÊı¾İÈçutc_time,stationµÈ
-        j=j+1;%¼ÇÂ¼Ñ­»·´ÎÊı£¬²¢ÇÒÓÉÓÚÃ¿¸öÔª°û¶¼ÊÇ´ÓµÚ1ĞĞ¿ªÊ¼È»ºóµ½µÚ35ĞĞ£¬ËùÒÔjÓÃÓÚ¿ØÖÆ¸´ÖÆµÄ¼ÇÂ¼ÔÚÔª°ûÊı×éÖĞµÄÎ»ÖÃ
-    else %Èç¹ûÆ¥Åä²»ÉÏ
+    if isequal(table2cell(y(i,2)),table2cell(aqi_utc_time)) %å¦‚æœè¯¥è¡Œç¬¬4åˆ—çš„utc_timeä¸é¢„å…ˆè®¾å®šå¥½çš„utc_timeåŒ¹é…ä¸Šï¼Œåˆ™æ‰§è¡Œå¦‚ä¸‹æ“ä½œ
+        aqi(j,1:size(y,2),k)=table2cell(y(i,1:size(y,2))); %å°†æ—¶é—´æˆ³åŒ¹é…ä¸Šçš„è®°å½•å¤åˆ¶åˆ°ç¬¬kä¸ªå…ƒèƒæ•°ç»„é‡Œï¼Œè¡Œæ˜¯è®°å½•ï¼Œåˆ—æ˜¯ä¸åŒçš„æ•°æ®å¦‚utc_time,stationç­‰
+        j=j+1;%è®°å½•å¾ªç¯æ¬¡æ•°ï¼Œå¹¶ä¸”ç”±äºæ¯ä¸ªå…ƒèƒéƒ½æ˜¯ä»ç¬¬1è¡Œå¼€å§‹ç„¶ååˆ°ç¬¬35è¡Œï¼Œæ‰€ä»¥jç”¨äºæ§åˆ¶å¤åˆ¶çš„è®°å½•åœ¨å…ƒèƒæ•°ç»„ä¸­çš„ä½ç½®
+    else %å¦‚æœåŒ¹é…ä¸ä¸Š
         %L(i-1,1:10,k)=x(i,1:10);
-        aqi_utc_time=y(i,2);%Èç¹ûÆ¥Åä²»ÉÏ£¬ÓÉÓÚÌáÇ°ÒÑ¾­¶Ôutc_time½øĞĞÁËÅÅĞò£¬Òò´ËËµÃ÷³öÏÖÁËĞÂµÄÊ±¼ä´Á£¬´ËÊ±¾ÍÒª¸ü¸ÄÖ®Ç°utcµÄÄ¬ÈÏÖµ
-        k=k+1;%ÓÉÓÚ³öÏÖÁËĞÂµÄÊ±¼ä´Á£¬Òò´ËÒªÓÃÒ»¸öĞÂµÄ¶şÎ¬Ôª°ûÊı×éÖØĞÂ½øĞĞ¼ÇÂ¼
-        aqi(1,1:size(y,2),k)=table2cell(y(i,1:size(y,2)));%½«ÕâÌõ¼ÇÂ¼·ÅÖÃµ½ĞÂµÄ¶şÎ¬Ôª°ûÊı×éÀïÃæ£¬²¢ÇÒÕâÒ»ÌõÊÇµÚÒ»Ìõ¼ÇÂ¼£¬Òò´ËÊÇ¡°1¡±
-        j=2;%ºóÃæµÄÃ¿Ò»ÌõĞÂµÄÆ¥Åä¼ÇÂ¼¶¼ÊÇ´Ó2¿ªÊ¼Â¼Èë
+        aqi_utc_time=y(i,2);%å¦‚æœåŒ¹é…ä¸ä¸Šï¼Œç”±äºæå‰å·²ç»å¯¹utc_timeè¿›è¡Œäº†æ’åºï¼Œå› æ­¤è¯´æ˜å‡ºç°äº†æ–°çš„æ—¶é—´æˆ³ï¼Œæ­¤æ—¶å°±è¦æ›´æ”¹ä¹‹å‰utcçš„é»˜è®¤å€¼
+        k=k+1;%ç”±äºå‡ºç°äº†æ–°çš„æ—¶é—´æˆ³ï¼Œå› æ­¤è¦ç”¨ä¸€ä¸ªæ–°çš„äºŒç»´å…ƒèƒæ•°ç»„é‡æ–°è¿›è¡Œè®°å½•
+        aqi(1,1:size(y,2),k)=table2cell(y(i,1:size(y,2)));%å°†è¿™æ¡è®°å½•æ”¾ç½®åˆ°æ–°çš„äºŒç»´å…ƒèƒæ•°ç»„é‡Œé¢ï¼Œå¹¶ä¸”è¿™ä¸€æ¡æ˜¯ç¬¬ä¸€æ¡è®°å½•ï¼Œå› æ­¤æ˜¯â€œ1â€
+        j=2;%åé¢çš„æ¯ä¸€æ¡æ–°çš„åŒ¹é…è®°å½•éƒ½æ˜¯ä»2å¼€å§‹å½•å…¥
     end
     
 end
 toc
 
-% %%%ÕÒ³öÖØ¸´ÁËµÄaqi_without_winter ¼ÇÂ¼
+% %%%æ‰¾å‡ºé‡å¤äº†çš„aqi_without_winter è®°å½•
 % tic
 % multiple_aqi=[];
 % multiple_aqi_location=[];
-% for j=1:size(aqi,3)%¶ÔÓÚaqiÀïÃæµÄÃ¿Ò»¸ö¶şÎ¬Ôª°ûÊı×é
-%      for w=36:70%¶ÔÓÚÀïÃæµÄ36-70ÁĞÃ¿Ò»ÁĞ¶¼½øĞĞ²éÑ¯
-%      if ~isempty(cell2mat(aqi(w,1,j)))%Èç¹û¸ÃĞĞµÄµÚÒ»¸öÔª°û²»ÊÇ¿Õ£¬ÔòËµÃ÷¸ÃĞ¡Ê±ÀïÃæµÄ35¸öÕ¾µãµÄ¼ÇÂ¼ÖØ¸´
-%          multiple_aqi=cat(1,multiple_aqi,w); %Êä³öÕâÁĞµÄÁĞºÅ
-%          multiple_aqi_location=cat(1,multiple_aqi_location,j); %Êä³öÔª°ûËùÔÚÎ»ÖÃ
+% for j=1:size(aqi,3)%å¯¹äºaqié‡Œé¢çš„æ¯ä¸€ä¸ªäºŒç»´å…ƒèƒæ•°ç»„
+%      for w=36:70%å¯¹äºé‡Œé¢çš„36-70åˆ—æ¯ä¸€åˆ—éƒ½è¿›è¡ŒæŸ¥è¯¢
+%      if ~isempty(cell2mat(aqi(w,1,j)))%å¦‚æœè¯¥è¡Œçš„ç¬¬ä¸€ä¸ªå…ƒèƒä¸æ˜¯ç©ºï¼Œåˆ™è¯´æ˜è¯¥å°æ—¶é‡Œé¢çš„35ä¸ªç«™ç‚¹çš„è®°å½•é‡å¤
+%          multiple_aqi=cat(1,multiple_aqi,w); %è¾“å‡ºè¿™åˆ—çš„åˆ—å·
+%          multiple_aqi_location=cat(1,multiple_aqi_location,j); %è¾“å‡ºå…ƒèƒæ‰€åœ¨ä½ç½®
 %      end
 %      end
 % end
 % toc
 % 
-%  %%%É¾³ıÖØ¸´¼ÇÂ¼
+%  %%%åˆ é™¤é‡å¤è®°å½•
 %  for j=1:size(aqi,3)
-%      if mod(i,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+%      if mod(i,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
 %        j     
 %     end
 %       for w1=1:size(aqi(:,:,j),1)
@@ -122,7 +124,7 @@ toc
 %               if w2 ~=w1
 %                 if strcmp(cell2mat(aqi(w1,1,j)),cell2mat(aqi(w2,1,j)))
 %                    for w3=1:size(aqi,2)
-%                     aqi{w2,w3,j}=[];%%¶ÔÔª°ûÊı×éÉ¾³ıÊı¾İµÄÊ±ºòÖ»ÄÜÓĞÒ»¸ö·ÇÃ°ºÅË÷Òı£¬Òò´ËÖ»ÄÜÊÖ¶¯Ñ­»·
+%                     aqi{w2,w3,j}=[];%%å¯¹å…ƒèƒæ•°ç»„åˆ é™¤æ•°æ®çš„æ—¶å€™åªèƒ½æœ‰ä¸€ä¸ªéå†’å·ç´¢å¼•ï¼Œå› æ­¤åªèƒ½æ‰‹åŠ¨å¾ªç¯
 %                    end
 %                 end
 %               end
@@ -131,12 +133,12 @@ toc
 %  end
 % 
 
-%%½«P±íºÍÀúÊ·aqi±íÏÈ°´ÕÕĞ¡Ê±È»ºó°´ÕÕÕ¾µã½øĞĞÆ¥Åä
+%%å°†Pè¡¨å’Œå†å²aqiè¡¨å…ˆæŒ‰ç…§å°æ—¶ç„¶åæŒ‰ç…§ç«™ç‚¹è¿›è¡ŒåŒ¹é…
 tic
 t1=1;
 s1=1;
 for i=1:size(aqi,3)
-    if mod(i,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+    if mod(i,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
        i     
     end
     for j=t1:size(P,3)
@@ -156,7 +158,7 @@ toc
 tic
 beijing_aqi_full=aqi(:,:,1);
 for j=2:size(aqi,3)
-    if mod(j,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+    if mod(j,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
        j     
     end
     beijing_aqi_full=cat(1,beijing_aqi_full,aqi(:,:,j));
@@ -165,11 +167,11 @@ toc
 
     beijing_aqi_full=cell2table(beijing_aqi_full);
     
-%     %%%%Ö»±£Áôbeijing_aqi_fullÀïÃæµÄ·Ç¿ÕĞĞ
+%     %%%%åªä¿ç•™beijing_aqi_fullé‡Œé¢çš„éç©ºè¡Œ
 %     beijing_aqi_full_new(1,:)=beijing_aqi_full(1,:);
 %     k=1;
 %     for i=1:size(beijing_aqi_full,1)
-%         if mod(i,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+%         if mod(i,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
 %         i;    
 %          end
 %          if ~isequal(cell2mat(table2array(beijing_aqi_full(i,1))),[])
@@ -191,21 +193,21 @@ toc
 
 
 
-%%%%%%%½«±±¾©µÄÀúÊ·Êı¾İaqi-meo×Ü±íÔÚµÚ18ÁĞÔö¼Ó·çÏò¡£È»ºó½«Ëü×ª»»³ÉtableÒÔºó£¬½«PM2.5¡¢PM10¡¢O3
-%%%%%%%ÒÆ¶¯µ½·çÏòµÄÇ°Ãæ£¬ÌìÆøÒÆµ½·çÏòºóÃæ¡£È»ºó¸ù¾İÊ±¼ä½øĞĞ·Ö×é£¬ÀûÓÃBJ_knn_aqiº¯Êı½øĞĞ¿Õ¼ä²åÖµ
-%%%%%%%×îºóÔÙ¸ù¾İÕ¾µã·Ö×é£¬½øĞĞÊ±¼äÏßĞÔ²åÖµ
+%%%%%%%å°†åŒ—äº¬çš„å†å²æ•°æ®aqi-meoæ€»è¡¨åœ¨ç¬¬18åˆ—å¢åŠ é£å‘ã€‚ç„¶åå°†å®ƒè½¬æ¢æˆtableä»¥åï¼Œå°†PM2.5ã€PM10ã€O3
+%%%%%%%ç§»åŠ¨åˆ°é£å‘çš„å‰é¢ï¼Œå¤©æ°”ç§»åˆ°é£å‘åé¢ã€‚ç„¶åæ ¹æ®æ—¶é—´è¿›è¡Œåˆ†ç»„ï¼Œåˆ©ç”¨BJ_knn_aqiå‡½æ•°è¿›è¡Œç©ºé—´æ’å€¼
+%%%%%%%æœ€åå†æ ¹æ®ç«™ç‚¹åˆ†ç»„ï¼Œè¿›è¡Œæ—¶é—´çº¿æ€§æ’å€¼
 
 clear
 tic
-BJ=readtable('beijing_17_01_18_05-20_all_aqi_meo_weather_75_model_without_encoding_new.csv'); %%µ¼Èë±±¾©aqi-meo×Ü±í£¬µ¼ÈëÇ°ÒªÇåÀí¿Õ°×
+BJ=readtable('beijing_17_01_18_05-20_all_aqi_meo_weather_75_model_without_encoding_new.csv'); %%å¯¼å…¥åŒ—äº¬aqi-meoæ€»è¡¨ï¼Œå¯¼å…¥å‰è¦æ¸…ç†ç©ºç™½
 toc
 
 BJ=table2cell(BJ);
 
-%%½«·çÏòÌí¼Óµ½BJµÄ18ÁĞ
+%%å°†é£å‘æ·»åŠ åˆ°BJçš„18åˆ—
 tic
 for i=1:size(BJ,1)
-            if mod(i,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+            if mod(i,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
             i    
             end
             if cell2mat(BJ(i,14))>0 && cell2mat(BJ(i,15))>0
@@ -236,29 +238,29 @@ BJ=cell2table(BJ);
 % writetable(BJ,'beijing_historical_month_aqi_meo_full_75_model_with_wind_direction.csv','Delimiter',',','QuoteStrings',true)
 % toc
 
-%%%%%%%%%%%%µ÷ÕûË³Ğò£¬É¾³ıu¡¢v·½ÏòµÄ·çËÙ£¬½«PM2.5¡¢PM10¡¢O3¡¢NO2£¬CO£¬SO2ÒÆµ½·çÏòµÄÇ°Ãæ£¬·çÏò
-%%%%%%%%%%%%½«ÌìÆøÇé¿öÒÆµ½·çÏòºóÃæ£¬±ä³É×îºóÒ»ÁĞ
+%%%%%%%%%%%%è°ƒæ•´é¡ºåºï¼Œåˆ é™¤uã€væ–¹å‘çš„é£é€Ÿï¼Œå°†PM2.5ã€PM10ã€O3ã€NO2ï¼ŒCOï¼ŒSO2ç§»åˆ°é£å‘çš„å‰é¢ï¼Œé£å‘
+%%%%%%%%%%%%å°†å¤©æ°”æƒ…å†µç§»åˆ°é£å‘åé¢ï¼Œå˜æˆæœ€åä¸€åˆ—
 
-BJ(:,{'BJ14','BJ15'}) = [];%%É¾³ıu¡¢v·½ÏòµÄ·çËÙ
-BJ = BJ(:,[1:14 16 15]);%½«ÌìÆøÇé¿öÒÆµ½·çÏòºóÃæ£¬±ä³É×îºóÒ»ÁĞ
-BJ = BJ(:,[1:2 4:14 3 15:end]);%%½«PM2.5ÒÆµ½·çÏòµÄÇ°Ãæ
-BJ = BJ(:,[1:2 4:14 3 15:end]);%%½«PM10ÒÆµ½·çÏòµÄÇ°Ãæ
-BJ = BJ(:,[1:2 4:14 3 15:end]);%%½«O3ÒÆµ½·çÏòµÄÇ°Ãæ
-BJ = BJ(:,[1:2 4:14 3 15:end]);%%½«NO2ÒÆµ½·çÏòµÄÇ°Ãæ
-BJ = BJ(:,[1:2 4:14 3 15:end]);%%½«COÒÆµ½·çÏòµÄÇ°Ãæ
-BJ = BJ(:,[1:2 4:14 3 15:end]);%%½«SO2ÒÆµ½·çÏòµÄÇ°Ãæ
+BJ(:,{'BJ14','BJ15'}) = [];%%åˆ é™¤uã€væ–¹å‘çš„é£é€Ÿ
+BJ = BJ(:,[1:14 16 15]);%å°†å¤©æ°”æƒ…å†µç§»åˆ°é£å‘åé¢ï¼Œå˜æˆæœ€åä¸€åˆ—
+BJ = BJ(:,[1:2 4:14 3 15:end]);%%å°†PM2.5ç§»åˆ°é£å‘çš„å‰é¢
+BJ = BJ(:,[1:2 4:14 3 15:end]);%%å°†PM10ç§»åˆ°é£å‘çš„å‰é¢
+BJ = BJ(:,[1:2 4:14 3 15:end]);%%å°†O3ç§»åˆ°é£å‘çš„å‰é¢
+BJ = BJ(:,[1:2 4:14 3 15:end]);%%å°†NO2ç§»åˆ°é£å‘çš„å‰é¢
+BJ = BJ(:,[1:2 4:14 3 15:end]);%%å°†COç§»åˆ°é£å‘çš„å‰é¢
+BJ = BJ(:,[1:2 4:14 3 15:end]);%%å°†SO2ç§»åˆ°é£å‘çš„å‰é¢
 
 
-%%%%%%%%%%%%½«BJ±í¸ñ°´ÕÕÊ±¼ä·Ö×é£¬È»ºó¶ÔÃ¿Ò»×é½øĞĞ¿Õ¼ä²åÖµÌî²¹NaN
+%%%%%%%%%%%%å°†BJè¡¨æ ¼æŒ‰ç…§æ—¶é—´åˆ†ç»„ï¼Œç„¶åå¯¹æ¯ä¸€ç»„è¿›è¡Œç©ºé—´æ’å€¼å¡«è¡¥NaN
 
-%%¶Ô±±¾©°´ÕÕutc_timeÀ´·Ö×é£¬ĞÎ³ÉÈıÎ¬Ôª°ûÊı×é
+%%å¯¹åŒ—äº¬æŒ‰ç…§utc_timeæ¥åˆ†ç»„ï¼Œå½¢æˆä¸‰ç»´å…ƒèƒæ•°ç»„
 tic
-temp_utc_time=table2cell(BJ(1,2)); %³õÊ¼»¯µÚÒ»¸öÓÃÓÚ·ÖÀàµÄutc_time
-BJ_data=cell(5,size(BJ,2),10);%³õÊ¼»¯ÈıÎ¬Ôª°ûÊı×é
-BJ_num=1;%Õ¾µãÊıÄ¿
-j=1;%¼ÇÂ¼Ñ­»·ÖĞÃ¿¸ö¶şÎ¬Ôª°ûÊı×éÀïÃæĞĞºÅ
+temp_utc_time=table2cell(BJ(1,2)); %åˆå§‹åŒ–ç¬¬ä¸€ä¸ªç”¨äºåˆ†ç±»çš„utc_time
+BJ_data=cell(5,size(BJ,2),10);%åˆå§‹åŒ–ä¸‰ç»´å…ƒèƒæ•°ç»„
+BJ_num=1;%ç«™ç‚¹æ•°ç›®
+j=1;%è®°å½•å¾ªç¯ä¸­æ¯ä¸ªäºŒç»´å…ƒèƒæ•°ç»„é‡Œé¢è¡Œå·
 for i = 1:size(BJ,1)
-      if mod(i,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+      if mod(i,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
        i  
       end
       if isequal(temp_utc_time, table2cell(BJ(i,2)))
@@ -275,11 +277,11 @@ toc
 
 temp_BJ_data_1=BJ_data(:,:,1);
 
-%%¶Ô±±¾©µÄPM2.5¡¢PM10¡¢O3°´ÕÕ¿Õ¼ä×î½üÁÚ½øĞĞ·´¾àÀë¼ÓÈ¨²åÖµ
+%%å¯¹åŒ—äº¬çš„PM2.5ã€PM10ã€O3æŒ‰ç…§ç©ºé—´æœ€è¿‘é‚»è¿›è¡Œåè·ç¦»åŠ æƒæ’å€¼
 temp_BJ_data_new=cell(size(BJ_data));
 tic
 for i=1:size(BJ_data,3)
-        if mod(i,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+        if mod(i,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
          i  
         end
         temp_BJ_data_new(:,1:14,i)=BJ_knn_aqi_full(BJ_data(:,1:14,i));
@@ -291,13 +293,13 @@ temp_BJ_data_test=temp_BJ_data_new(:,:,1);
 
 
 
-%%½«temp_BJ_data_new°´ÕÕÊ±¼äºÏ²¢
+%%å°†temp_BJ_data_newæŒ‰ç…§æ—¶é—´åˆå¹¶
 
-%%ºÏ²¢
+%%åˆå¹¶
 tic
 BJ_temperature=temp_BJ_data_new(:,:,1);
 for j=2:BJ_num
-    if mod(j,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+    if mod(j,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
        j     
     end
     BJ_temperature=cat(1,BJ_temperature,temp_BJ_data_new(:,:,j));
@@ -317,18 +319,18 @@ toc
 
 clear
 tic
-BJ=readtable('beijing_17_01_18_05-20_all_aqi_meo_weather_75_model_without_encoding_space_interplote_new.csv');%%µ¼Èë°´ÕÕÕ¾µãÅÅĞòµÄ±í¸ñ
+BJ=readtable('beijing_17_01_18_05-20_all_aqi_meo_weather_75_model_without_encoding_space_interplote_new.csv');%%å¯¼å…¥æŒ‰ç…§ç«™ç‚¹æ’åºçš„è¡¨æ ¼
 toc
 
 
-%%¶Ô±±¾©°´ÕÕaqiÕ¾µãÀ´·Ö×é£¬ĞÎ³ÉÈıÎ¬Ôª°ûÊı×é
+%%å¯¹åŒ—äº¬æŒ‰ç…§aqiç«™ç‚¹æ¥åˆ†ç»„ï¼Œå½¢æˆä¸‰ç»´å…ƒèƒæ•°ç»„
 tic
-temp_aqi_station=table2cell(BJ(1,1)); %³õÊ¼»¯µÚÒ»¸öÓÃÓÚ·ÖÀàµÄaqi_station
-BJ_data=cell(200,size(BJ,2),10);%³õÊ¼»¯ÈıÎ¬Ôª°ûÊı×é
-BJ_num=1;%Õ¾µãÊıÄ¿
-j=1;%¼ÇÂ¼Ñ­»·ÖĞÃ¿¸ö¶şÎ¬Ôª°ûÊı×éÀïÃæĞĞºÅ
+temp_aqi_station=table2cell(BJ(1,1)); %åˆå§‹åŒ–ç¬¬ä¸€ä¸ªç”¨äºåˆ†ç±»çš„aqi_station
+BJ_data=cell(200,size(BJ,2),10);%åˆå§‹åŒ–ä¸‰ç»´å…ƒèƒæ•°ç»„
+BJ_num=1;%ç«™ç‚¹æ•°ç›®
+j=1;%è®°å½•å¾ªç¯ä¸­æ¯ä¸ªäºŒç»´å…ƒèƒæ•°ç»„é‡Œé¢è¡Œå·
 for i = 1:size(BJ,1)
-      if mod(i,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+      if mod(i,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
        i  
       end
       if isequal(temp_aqi_station, table2cell(BJ(i,1)))
@@ -346,9 +348,9 @@ toc
 temp_BJ_data_1=BJ_data(:,:,1);
 temp_BJ_data_6=BJ_data(:,:,6);
 BJ_data_beta=BJ_data;
-BJ_data=BJ_data_beta; %%³öÁËÎÊÌâ£¬ÔËĞĞÕâĞĞ»Ö¸´
+BJ_data=BJ_data_beta; %%å‡ºäº†é—®é¢˜ï¼Œè¿è¡Œè¿™è¡Œæ¢å¤
 
-%%Çó³ö·Ç¡°¿Õ¡±ĞĞÊı£º²»ÄÜÓÃsizeÈ¥Çó·Ç¡°¿Õ¡±ĞĞµÄÔª°ûÊı×éĞĞÊıÒòÎª°üº¬¿Õ¼¯µÄÔª°ûÊı×é·Ç¿Õ£¬Òò´ËÎŞ·¨Çó³öÕæÊµµÄ·Ç¡°¿Õ¡±ĞĞ
+%%æ±‚å‡ºéâ€œç©ºâ€è¡Œæ•°ï¼šä¸èƒ½ç”¨sizeå»æ±‚éâ€œç©ºâ€è¡Œçš„å…ƒèƒæ•°ç»„è¡Œæ•°å› ä¸ºåŒ…å«ç©ºé›†çš„å…ƒèƒæ•°ç»„éç©ºï¼Œå› æ­¤æ— æ³•æ±‚å‡ºçœŸå®çš„éâ€œç©ºâ€è¡Œ
 BJ_empty=double(BJ_num);
 k=0;
  for i=1:BJ_num
@@ -361,19 +363,19 @@ k=0;
      k=0;
  end
  
-%%%%%¶ÔÃ¿¸öaqiÕ¾µã£¬¸ù¾İÊ±¼ä·¢Õ¹Ë³Ğò£¬Á¬Ğø²»³¬¹ı7¸öPM2.5¡¢PM10¡¢O3ÊÇNaNµÄÊ±ºò
-%%%%%ÀûÓÃÏßĞÔ²îÖµµÄ·½Ê½½øĞĞ²åÖµ£¬Ìî²¹NaN
+%%%%%å¯¹æ¯ä¸ªaqiç«™ç‚¹ï¼Œæ ¹æ®æ—¶é—´å‘å±•é¡ºåºï¼Œè¿ç»­ä¸è¶…è¿‡7ä¸ªPM2.5ã€PM10ã€O3æ˜¯NaNçš„æ—¶å€™
+%%%%%åˆ©ç”¨çº¿æ€§å·®å€¼çš„æ–¹å¼è¿›è¡Œæ’å€¼ï¼Œå¡«è¡¥NaN
 h=1;
 tic
 for i=1:size(BJ_data,3)
     i
         for j=1:size(BJ_data(:,:,i),1)
-            if isnan(cell2mat(BJ_data(j,9,i)))%%ÅĞ¶ÏPM2.5ÊÇ·ñÎªNaN
-               if j+1<size(BJ_data(:,:,i),1) && j~=1 %%±ß½çÅĞ¶Ï£¬ÓÉÓÚºóÃæ³öÏÖÁËj-1,ÎªÁË±£Ö¤Ë÷Òı²»Îª0£¬Òò´Ëj²»ÄÜµÈÓÚ1
+            if isnan(cell2mat(BJ_data(j,9,i)))%%åˆ¤æ–­PM2.5æ˜¯å¦ä¸ºNaN
+               if j+1<size(BJ_data(:,:,i),1) && j~=1 %%è¾¹ç•Œåˆ¤æ–­ï¼Œç”±äºåé¢å‡ºç°äº†j-1,ä¸ºäº†ä¿è¯ç´¢å¼•ä¸ä¸º0ï¼Œå› æ­¤jä¸èƒ½ç­‰äº1
                    if ~isnan(cell2mat(BJ_data(j+1,9,i))) || ~isnan(cell2mat(BJ_data(j+2,9,i))) ...
                          || ~isnan(cell2mat(BJ_data(j+3,9,i))) || ~isnan(cell2mat(BJ_data(j+4,9,i))) ...
                          || ~isnan(cell2mat(BJ_data(j+5,9,i))) || ~isnan(cell2mat(BJ_data(j+6,9,i))) || ~isnan(cell2mat(BJ_data(j+7,9,i)))
-                     %Èç¹ûµÚ°Ë¸ö²»ÊÇNaN£¬Ò²¾ÍÊÇÁ¬ĞøNaNÊı×î¶àÊÇ7,×¢ÒâÕâ¸ö¡°»ò¡±Ìõ¼şÊÇ°´ÕÕ´Ó×óµ½ÓÒµÄË³ĞòÖ´ĞĞµÄ£¬Ò»¶¨Òª´ÓĞ¡µ½´óÈ¥Ğ´
+                     %å¦‚æœç¬¬å…«ä¸ªä¸æ˜¯NaNï¼Œä¹Ÿå°±æ˜¯è¿ç»­NaNæ•°æœ€å¤šæ˜¯7,æ³¨æ„è¿™ä¸ªâ€œæˆ–â€æ¡ä»¶æ˜¯æŒ‰ç…§ä»å·¦åˆ°å³çš„é¡ºåºæ‰§è¡Œçš„ï¼Œä¸€å®šè¦ä»å°åˆ°å¤§å»å†™
                         for k=1:6
                             if isnan(cell2mat(BJ_data(j+k,9,i)))
                                 h=h+1;
@@ -393,12 +395,12 @@ for i=1:size(BJ_data,3)
         h=1;
         
         for j=1:size(BJ_data(:,:,i),1)
-            if isnan(cell2mat(BJ_data(j,10,i)))%%ÅĞ¶ÏPM10ÊÇ·ñÎªNaN
-               if j+1<size(BJ_data(:,:,i),1) && j~=1 %%±ß½çÅĞ¶Ï£¬ÓÉÓÚºóÃæ³öÏÖÁËj-1,ÎªÁË±£Ö¤Ë÷Òı²»Îª0£¬Òò´Ëj²»ÄÜµÈÓÚ1
+            if isnan(cell2mat(BJ_data(j,10,i)))%%åˆ¤æ–­PM10æ˜¯å¦ä¸ºNaN
+               if j+1<size(BJ_data(:,:,i),1) && j~=1 %%è¾¹ç•Œåˆ¤æ–­ï¼Œç”±äºåé¢å‡ºç°äº†j-1,ä¸ºäº†ä¿è¯ç´¢å¼•ä¸ä¸º0ï¼Œå› æ­¤jä¸èƒ½ç­‰äº1
                  if ~isnan(cell2mat(BJ_data(j+1,10,i))) || ~isnan(cell2mat(BJ_data(j+2,10,i))) ...
                          || ~isnan(cell2mat(BJ_data(j+3,10,i))) || ~isnan(cell2mat(BJ_data(j+4,10,i))) ...
                          || ~isnan(cell2mat(BJ_data(j+5,10,i))) || ~isnan(cell2mat(BJ_data(j+6,10,i))) || ~isnan(cell2mat(BJ_data(j+7,10,i)))
-                     %%rÈç¹ûµÚ°Ë¸ö²»ÊÇNaN£¬Ò²¾ÍÊÇÁ¬ĞøNaNÊı×î¶àÊÇ7
+                     %%rå¦‚æœç¬¬å…«ä¸ªä¸æ˜¯NaNï¼Œä¹Ÿå°±æ˜¯è¿ç»­NaNæ•°æœ€å¤šæ˜¯7
                         for k=1:6
                             if isnan(cell2mat(BJ_data(j+k,10,i)))
                                 h=h+1;
@@ -417,12 +419,12 @@ for i=1:size(BJ_data,3)
             h=1;
             
         for j=1:size(BJ_data(:,:,i),1)
-            if isnan(cell2mat(BJ_data(j,11,i)))%%ÅĞ¶ÏO3ÊÇ·ñÎªNaN
-               if j+1<size(BJ_data(:,:,i),1) && j~=1 %%±ß½çÅĞ¶Ï£¬ÓÉÓÚºóÃæ³öÏÖÁËj-1,ÎªÁË±£Ö¤Ë÷Òı²»Îª0£¬Òò´Ëj²»ÄÜµÈÓÚ1
+            if isnan(cell2mat(BJ_data(j,11,i)))%%åˆ¤æ–­O3æ˜¯å¦ä¸ºNaN
+               if j+1<size(BJ_data(:,:,i),1) && j~=1 %%è¾¹ç•Œåˆ¤æ–­ï¼Œç”±äºåé¢å‡ºç°äº†j-1,ä¸ºäº†ä¿è¯ç´¢å¼•ä¸ä¸º0ï¼Œå› æ­¤jä¸èƒ½ç­‰äº1
                 if ~isnan(cell2mat(BJ_data(j+1,11,i))) || ~isnan(cell2mat(BJ_data(j+2,11,i))) ...
                          || ~isnan(cell2mat(BJ_data(j+3,11,i))) || ~isnan(cell2mat(BJ_data(j+4,11,i))) ...
                          || ~isnan(cell2mat(BJ_data(j+5,11,i))) || ~isnan(cell2mat(BJ_data(j+6,11,i))) || ~isnan(cell2mat(BJ_data(j+7,11,i)))
-                     %%rÈç¹ûµÚ°Ë¸ö²»ÊÇNaN£¬Ò²¾ÍÊÇÁ¬ĞøNaNÊı×î¶àÊÇ7
+                     %%rå¦‚æœç¬¬å…«ä¸ªä¸æ˜¯NaNï¼Œä¹Ÿå°±æ˜¯è¿ç»­NaNæ•°æœ€å¤šæ˜¯7
                         for k=1:6
                             if isnan(cell2mat(BJ_data(j+k,11,i)))
                                 h=h+1;
@@ -441,12 +443,12 @@ for i=1:size(BJ_data,3)
         h=1;
         
          for j=1:size(BJ_data(:,:,i),1)
-            if isnan(cell2mat(BJ_data(j,12,i)))%%ÅĞ¶ÏNO2ÊÇ·ñÎªNaN
-               if j+1<size(BJ_data(:,:,i),1) && j~=1 %%±ß½çÅĞ¶Ï£¬ÓÉÓÚºóÃæ³öÏÖÁËj-1,ÎªÁË±£Ö¤Ë÷Òı²»Îª0£¬Òò´Ëj²»ÄÜµÈÓÚ1
+            if isnan(cell2mat(BJ_data(j,12,i)))%%åˆ¤æ–­NO2æ˜¯å¦ä¸ºNaN
+               if j+1<size(BJ_data(:,:,i),1) && j~=1 %%è¾¹ç•Œåˆ¤æ–­ï¼Œç”±äºåé¢å‡ºç°äº†j-1,ä¸ºäº†ä¿è¯ç´¢å¼•ä¸ä¸º0ï¼Œå› æ­¤jä¸èƒ½ç­‰äº1
                 if ~isnan(cell2mat(BJ_data(j+1,12,i))) || ~isnan(cell2mat(BJ_data(j+2,12,i))) ...
                          || ~isnan(cell2mat(BJ_data(j+3,12,i))) || ~isnan(cell2mat(BJ_data(j+4,12,i))) ...
                          || ~isnan(cell2mat(BJ_data(j+5,12,i))) || ~isnan(cell2mat(BJ_data(j+6,12,i))) || ~isnan(cell2mat(BJ_data(j+7,12,i)))
-                     %%rÈç¹ûµÚ°Ë¸ö²»ÊÇNaN£¬Ò²¾ÍÊÇÁ¬ĞøNaNÊı×î¶àÊÇ7
+                     %%rå¦‚æœç¬¬å…«ä¸ªä¸æ˜¯NaNï¼Œä¹Ÿå°±æ˜¯è¿ç»­NaNæ•°æœ€å¤šæ˜¯7
                         for k=1:6
                             if isnan(cell2mat(BJ_data(j+k,12,i)))
                                 h=h+1;
@@ -465,12 +467,12 @@ for i=1:size(BJ_data,3)
         h=1;
         
         for j=1:size(BJ_data(:,:,i),1)
-            if isnan(cell2mat(BJ_data(j,13,i)))%%ÅĞ¶ÏCOÊÇ·ñÎªNaN
-               if j+1<size(BJ_data(:,:,i),1) && j~=1 %%±ß½çÅĞ¶Ï£¬ÓÉÓÚºóÃæ³öÏÖÁËj-1,ÎªÁË±£Ö¤Ë÷Òı²»Îª0£¬Òò´Ëj²»ÄÜµÈÓÚ1
+            if isnan(cell2mat(BJ_data(j,13,i)))%%åˆ¤æ–­COæ˜¯å¦ä¸ºNaN
+               if j+1<size(BJ_data(:,:,i),1) && j~=1 %%è¾¹ç•Œåˆ¤æ–­ï¼Œç”±äºåé¢å‡ºç°äº†j-1,ä¸ºäº†ä¿è¯ç´¢å¼•ä¸ä¸º0ï¼Œå› æ­¤jä¸èƒ½ç­‰äº1
                 if ~isnan(cell2mat(BJ_data(j+1,13,i))) || ~isnan(cell2mat(BJ_data(j+2,13,i))) ...
                          || ~isnan(cell2mat(BJ_data(j+3,13,i))) || ~isnan(cell2mat(BJ_data(j+4,13,i))) ...
                          || ~isnan(cell2mat(BJ_data(j+5,13,i))) || ~isnan(cell2mat(BJ_data(j+6,13,i))) || ~isnan(cell2mat(BJ_data(j+7,13,i)))
-                     %%rÈç¹ûµÚ°Ë¸ö²»ÊÇNaN£¬Ò²¾ÍÊÇÁ¬ĞøNaNÊı×î¶àÊÇ7
+                     %%rå¦‚æœç¬¬å…«ä¸ªä¸æ˜¯NaNï¼Œä¹Ÿå°±æ˜¯è¿ç»­NaNæ•°æœ€å¤šæ˜¯7
                         for k=1:6
                             if isnan(cell2mat(BJ_data(j+k,13,i)))
                                 h=h+1;
@@ -489,12 +491,12 @@ for i=1:size(BJ_data,3)
         h=1;
         
         for j=1:size(BJ_data(:,:,i),1)
-            if isnan(cell2mat(BJ_data(j,14,i)))%%ÅĞ¶ÏSO2ÊÇ·ñÎªNaN
-               if j+1<size(BJ_data(:,:,i),1) && j~=1 %%±ß½çÅĞ¶Ï£¬ÓÉÓÚºóÃæ³öÏÖÁËj-1,ÎªÁË±£Ö¤Ë÷Òı²»Îª0£¬Òò´Ëj²»ÄÜµÈÓÚ1
+            if isnan(cell2mat(BJ_data(j,14,i)))%%åˆ¤æ–­SO2æ˜¯å¦ä¸ºNaN
+               if j+1<size(BJ_data(:,:,i),1) && j~=1 %%è¾¹ç•Œåˆ¤æ–­ï¼Œç”±äºåé¢å‡ºç°äº†j-1,ä¸ºäº†ä¿è¯ç´¢å¼•ä¸ä¸º0ï¼Œå› æ­¤jä¸èƒ½ç­‰äº1
                 if ~isnan(cell2mat(BJ_data(j+1,14,i))) || ~isnan(cell2mat(BJ_data(j+2,14,i))) ...
                          || ~isnan(cell2mat(BJ_data(j+3,14,i))) || ~isnan(cell2mat(BJ_data(j+4,14,i))) ...
                          || ~isnan(cell2mat(BJ_data(j+5,14,i))) || ~isnan(cell2mat(BJ_data(j+6,14,i))) || ~isnan(cell2mat(BJ_data(j+7,14,i)))
-                     %%rÈç¹ûµÚ°Ë¸ö²»ÊÇNaN£¬Ò²¾ÍÊÇÁ¬ĞøNaNÊı×î¶àÊÇ7
+                     %%rå¦‚æœç¬¬å…«ä¸ªä¸æ˜¯NaNï¼Œä¹Ÿå°±æ˜¯è¿ç»­NaNæ•°æœ€å¤šæ˜¯7
                         for k=1:6
                             if isnan(cell2mat(BJ_data(j+k,14,i)))
                                 h=h+1;
@@ -515,13 +517,13 @@ for i=1:size(BJ_data,3)
 end
 toc
 
-%%½«temp_BJ_data_new°´ÕÕÊ±¼äºÏ²¢
+%%å°†temp_BJ_data_newæŒ‰ç…§æ—¶é—´åˆå¹¶
 
-%%ºÏ²¢
+%%åˆå¹¶
 tic
 BJ_temperature=BJ_data(:,:,1);
 for j=2:BJ_num
-     if mod(j,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+     if mod(j,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
        j 
     end     
     BJ_temperature=cat(1,BJ_temperature,BJ_data(:,:,j));
@@ -535,22 +537,22 @@ tic
 writetable(BJ_temperature,'temp_BJ_17_01_18_05-20_data_weather_75_model_with_time_interplot_new_without_encoding.csv');
 toc
 
-%%%%%%%%%%%%½«ÁÙ½üËÄ¸öÕ¾µãµÄPM2.5¡¢PM10¡¢O3¡¢NO2¡¢CO¡¢SO2·Åµ½16ÁĞÒÔºó£¨±£ÁôÕ¾µãÃû³Æ£¬ºóÃæºÃ·Ö±æÊÇ·ñ²å¶ÔÁË£©
+%%%%%%%%%%%%å°†ä¸´è¿‘å››ä¸ªç«™ç‚¹çš„PM2.5ã€PM10ã€O3ã€NO2ã€COã€SO2æ”¾åˆ°16åˆ—ä»¥åï¼ˆä¿ç•™ç«™ç‚¹åç§°ï¼Œåé¢å¥½åˆ†è¾¨æ˜¯å¦æ’å¯¹äº†ï¼‰
 clear
 tic
-BJ=readtable('temp_BJ_17_01_18_05-20_data_weather_75_model_with_time_interplot_new_without_encoding_sort_time.csv');%%µ¼Èë°´ÕÕÊ±¼äÅÅĞòµÄ±í¸ñ
+BJ=readtable('temp_BJ_17_01_18_05-20_data_weather_75_model_with_time_interplot_new_without_encoding_sort_time.csv');%%å¯¼å…¥æŒ‰ç…§æ—¶é—´æ’åºçš„è¡¨æ ¼
 toc
 
 % BJ(152049,1)=BJ(152048,2);
 % BJ(152048,:) = [];
-%%¶Ô±±¾©°´ÕÕutc_timeÀ´·Ö×é£¬ĞÎ³ÉÈıÎ¬Ôª°ûÊı×é
+%%å¯¹åŒ—äº¬æŒ‰ç…§utc_timeæ¥åˆ†ç»„ï¼Œå½¢æˆä¸‰ç»´å…ƒèƒæ•°ç»„
 tic
-temp_utc_time=table2cell(BJ(1,2)); %³õÊ¼»¯µÚÒ»¸öÓÃÓÚ·ÖÀàµÄutc_time
-BJ_data=cell(5,size(BJ,2),10);%³õÊ¼»¯ÈıÎ¬Ôª°ûÊı×é
-BJ_num=1;%Õ¾µãÊıÄ¿
-j=1;%¼ÇÂ¼Ñ­»·ÖĞÃ¿¸ö¶şÎ¬Ôª°ûÊı×éÀïÃæĞĞºÅ
+temp_utc_time=table2cell(BJ(1,2)); %åˆå§‹åŒ–ç¬¬ä¸€ä¸ªç”¨äºåˆ†ç±»çš„utc_time
+BJ_data=cell(5,size(BJ,2),10);%åˆå§‹åŒ–ä¸‰ç»´å…ƒèƒæ•°ç»„
+BJ_num=1;%ç«™ç‚¹æ•°ç›®
+j=1;%è®°å½•å¾ªç¯ä¸­æ¯ä¸ªäºŒç»´å…ƒèƒæ•°ç»„é‡Œé¢è¡Œå·
 for i = 1:size(BJ,1)
-      if mod(i,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+      if mod(i,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
        i  
       end
       if isequal(temp_utc_time, table2cell(BJ(i,2)))
@@ -571,7 +573,7 @@ temp_BJ_data=temp_BJ_data_1;
 temp_BJ_data_new=cell(size(BJ_data,1),64,size(BJ_data,3));
 tic
 for i=1:size(BJ_data,3)
-        if mod(i,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+        if mod(i,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
         i  
         end 
          if ~isnan(cell2mat(BJ_data(1,3,i)))
@@ -582,13 +584,13 @@ end
 toc
 temp_BJ_data_new_1=temp_BJ_data_new(:,:,1);
 
-%%½«temp_BJ_data_new°´ÕÕÊ±¼äºÏ²¢
+%%å°†temp_BJ_data_newæŒ‰ç…§æ—¶é—´åˆå¹¶
 
-%%ºÏ²¢
+%%åˆå¹¶
 tic
 BJ_temperature=temp_BJ_data_new(:,:,1);
 for j=2:BJ_num
-       if mod(j,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+       if mod(j,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
        j  
       end   
     BJ_temperature=cat(1,BJ_temperature,temp_BJ_data_new(:,:,j));
@@ -606,7 +608,7 @@ toc
 
 clear
 tic
-BJ=readtable('temp_BJ_17_01_18_05-20_data_weather_75_model_full_result_new_new_without_encoding_new.csv'); %%%°´ÕÕÕ¾µãË³ĞòÅÅÁĞ£¬ÌìÆøÔÚ×îºóÒ»ÁĞ
+BJ=readtable('temp_BJ_17_01_18_05-20_data_weather_75_model_full_result_new_new_without_encoding_new.csv'); %%%æŒ‰ç…§ç«™ç‚¹é¡ºåºæ’åˆ—ï¼Œå¤©æ°”åœ¨æœ€åä¸€åˆ—
 toc
 BJ=table2cell(BJ);
 
@@ -651,17 +653,17 @@ toc
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % clear
 % tic
-% BJ=readtable('temp_BJ_all_month_data_weather_75_model_full_result_new_new_new_without_encoding.csv');%%%°´Õ¾µãÅÅĞò
+% BJ=readtable('temp_BJ_all_month_data_weather_75_model_full_result_new_new_new_without_encoding.csv');%%%æŒ‰ç«™ç‚¹æ’åº
 % toc
 % 
-% %%%%½«±±¾©aqi-meo×Ü±í°´ÕÕaqiÕ¾µã½øĞĞ·Ö×é
+% %%%%å°†åŒ—äº¬aqi-meoæ€»è¡¨æŒ‰ç…§aqiç«™ç‚¹è¿›è¡Œåˆ†ç»„
 % tic
-% temp_aqi_station=table2cell(BJ(1,1)); %³õÊ¼»¯µÚÒ»¸öÓÃÓÚ·ÖÀàµÄaqi_station
-% BJ_data=cell(200,size(BJ,2),35);%³õÊ¼»¯ÈıÎ¬Ôª°ûÊı×é
-% BJ_num=1;%Õ¾µãÊıÄ¿
-% j=1;%¼ÇÂ¼Ñ­»·ÖĞÃ¿¸ö¶şÎ¬Ôª°ûÊı×éÀïÃæĞĞºÅ
+% temp_aqi_station=table2cell(BJ(1,1)); %åˆå§‹åŒ–ç¬¬ä¸€ä¸ªç”¨äºåˆ†ç±»çš„aqi_station
+% BJ_data=cell(200,size(BJ,2),35);%åˆå§‹åŒ–ä¸‰ç»´å…ƒèƒæ•°ç»„
+% BJ_num=1;%ç«™ç‚¹æ•°ç›®
+% j=1;%è®°å½•å¾ªç¯ä¸­æ¯ä¸ªäºŒç»´å…ƒèƒæ•°ç»„é‡Œé¢è¡Œå·
 % for i = 1:size(BJ,1)
-%       if mod(i,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+%       if mod(i,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
 %        i  
 %       end
 %       if isequal(temp_aqi_station, table2cell(BJ(i,1)))
@@ -676,12 +678,12 @@ toc
 % end
 % toc
 % 
-% %BJ_data_beta=BJ_data;%%±¸·İÒÔ·À³ö´í
-% %BJ_data=BJ_data_beta;%%»¹Ô­
+% %BJ_data_beta=BJ_data;%%å¤‡ä»½ä»¥é˜²å‡ºé”™
+% %BJ_data=BJ_data_beta;%%è¿˜åŸ
 % 
-% %%%%%%½«5-32ÁĞ
-% %%¼´ÎÂ¶È¡¢Ñ¹Ç¿¡¢Êª¶È¡¢·çËÙ¡¢·çÏò¡¢PM2.5¡¢PM10¡¢O3ÒÔ¼°4¸öÁÙ½üÕ¾µãµÄPM2.5¡¢PM10¡¢O3¡¢·çËÙ¡¢·çÏò
-% %%ÒÆ¶¯8´Î
+% %%%%%%å°†5-32åˆ—
+% %%å³æ¸©åº¦ã€å‹å¼ºã€æ¹¿åº¦ã€é£é€Ÿã€é£å‘ã€PM2.5ã€PM10ã€O3ä»¥åŠ4ä¸ªä¸´è¿‘ç«™ç‚¹çš„PM2.5ã€PM10ã€O3ã€é£é€Ÿã€é£å‘
+% %%ç§»åŠ¨8æ¬¡
 % 
 % timestep=8;
 % for i=1:size(BJ_data,3) 
@@ -694,9 +696,9 @@ toc
 % 
 % %temp_BJ_data_1=BJ_data(:,:,1);
 % 
-% %BJ_data_alpha=BJ_data;%%%±¸·İ
+% %BJ_data_alpha=BJ_data;%%%å¤‡ä»½
 % 
-% %%ºÏ²¢
+% %%åˆå¹¶
 % tic
 % BJ_temperature=BJ_data(:,:,1);
 % for j=2:BJ_num
@@ -709,7 +711,7 @@ toc
 % BJ_temperature=cell2table(BJ_temperature);
 % 
 % 
-% %%%%%%%%½«·çÏò¡¢ÌìÆøÍ³Ò»ÒÆ¶¯µ½×îºó
+% %%%%%%%%å°†é£å‘ã€å¤©æ°”ç»Ÿä¸€ç§»åŠ¨åˆ°æœ€å
 % tic
 % BJ_temperature = BJ_temperature(:,[1:267 269:292 268]);
 % BJ_temperature = BJ_temperature(:,[1:235 237:292 236]);
@@ -721,10 +723,10 @@ toc
 % BJ_temperature = BJ_temperature(:,[1:43 45:292 44]);
 % BJ_temperature = BJ_temperature(:,[1:11 13:292 12]);
 % toc
-% %BJ_temperature_beta=BJ_temperature;%%%±¸·İ
-% %BJ_temperature=BJ_temperature_beta;%%%»¹Ô­
+% %BJ_temperature_beta=BJ_temperature;%%%å¤‡ä»½
+% %BJ_temperature=BJ_temperature_beta;%%%è¿˜åŸ
 % 
-% %%%%%%%½«×îºóÎåĞ¡Ê±µÄÁÚ½üÕ¾µãµÄpm2.5£¬pm10£¬O3£¬·çËÙ£¬·çÏòÒÆ¶¯µ½×îºó
+% %%%%%%%å°†æœ€åäº”å°æ—¶çš„é‚»è¿‘ç«™ç‚¹çš„pm2.5ï¼Œpm10ï¼ŒO3ï¼Œé£é€Ÿï¼Œé£å‘ç§»åŠ¨åˆ°æœ€å
 % tic
 % BJ_temperature = BJ_temperature(:,[1:259 284:292 260:283]);
 % BJ_temperature = BJ_temperature(:,[1:228 253:292 229:252]);
@@ -732,35 +734,35 @@ toc
 % BJ_temperature = BJ_temperature(:,[1:166 191:292 167:190]);
 % BJ_temperature = BJ_temperature(:,[1:135 160:292 136:159]);
 % toc
-% %BJ_temperature_alpha=BJ_temperature;%%±¸·İ
+% %BJ_temperature_alpha=BJ_temperature;%%å¤‡ä»½
 % 
-% %%%%%%%½«Ç°4Ğ¡Ê±µÄÁÚ½üÕ¾µãµÄÊı¾İÈ«²¿É¾È¥
+% %%%%%%%å°†å‰4å°æ—¶çš„é‚»è¿‘ç«™ç‚¹çš„æ•°æ®å…¨éƒ¨åˆ å»
 % tic
 % BJ_temperature(:,{'BJ_temperature109','BJ_temperature110','BJ_temperature111','BJ_temperature112','BJ_temperature113','BJ_temperature114','BJ_temperature115','BJ_temperature116','BJ_temperature117','BJ_temperature118','BJ_temperature119','BJ_temperature120','BJ_temperature121','BJ_temperature122','BJ_temperature123','BJ_temperature124','BJ_temperature125','BJ_temperature126','BJ_temperature127','BJ_temperature128','BJ_temperature129','BJ_temperature130','BJ_temperature131','BJ_temperature132'}) = [];
 % BJ_temperature(:,{'BJ_temperature77','BJ_temperature78','BJ_temperature79','BJ_temperature80','BJ_temperature81','BJ_temperature82','BJ_temperature83','BJ_temperature84','BJ_temperature85','BJ_temperature86','BJ_temperature87','BJ_temperature88','BJ_temperature89','BJ_temperature90','BJ_temperature91','BJ_temperature92','BJ_temperature93','BJ_temperature94','BJ_temperature95','BJ_temperature96','BJ_temperature97','BJ_temperature98','BJ_temperature99','BJ_temperature100'}) = [];
 % BJ_temperature(:,{'BJ_temperature45','BJ_temperature46','BJ_temperature47','BJ_temperature48','BJ_temperature49','BJ_temperature50','BJ_temperature51','BJ_temperature52','BJ_temperature53','BJ_temperature54','BJ_temperature55','BJ_temperature56','BJ_temperature57','BJ_temperature58','BJ_temperature59','BJ_temperature60','BJ_temperature61','BJ_temperature62','BJ_temperature63','BJ_temperature64','BJ_temperature65','BJ_temperature66','BJ_temperature67','BJ_temperature68'}) = [];
 % BJ_temperature(:,{'BJ_temperature13','BJ_temperature14','BJ_temperature15','BJ_temperature16','BJ_temperature17','BJ_temperature18','BJ_temperature19','BJ_temperature20','BJ_temperature21','BJ_temperature22','BJ_temperature23','BJ_temperature24','BJ_temperature25','BJ_temperature26','BJ_temperature27','BJ_temperature28','BJ_temperature29','BJ_temperature30','BJ_temperature31','BJ_temperature32','BJ_temperature33','BJ_temperature34','BJ_temperature35','BJ_temperature36'}) = [];
 % toc
-% %BJ_temperature_delta=BJ_temperature;%%±¸·İ
+% %BJ_temperature_delta=BJ_temperature;%%å¤‡ä»½
 % 
-% %%%%%%%É¾³ıÕ¾µãÃû³Æ
+% %%%%%%%åˆ é™¤ç«™ç‚¹åç§°
 % tic
 % BJ_temperature(:,{'BJ_temperature269','BJ_temperature275','BJ_temperature281','BJ_temperature287','BJ_temperature237','BJ_temperature243','BJ_temperature249','BJ_temperature255','BJ_temperature205','BJ_temperature211','BJ_temperature217','BJ_temperature223','BJ_temperature173','BJ_temperature179','BJ_temperature185','BJ_temperature191','BJ_temperature141','BJ_temperature147','BJ_temperature153','BJ_temperature159'}) = [];
 % toc
 % 
-% %BJ_temperature_alpha=BJ_temperature;%%±¸·İ
+% %BJ_temperature_alpha=BJ_temperature;%%å¤‡ä»½
 % 
-% %%%%%%%½«×îºóÒ»Ğ¡Ê±µÄPM2.5¡¢PM10¡¢O3ÒÆ¶¯60´Î
+% %%%%%%%å°†æœ€åä¸€å°æ—¶çš„PM2.5ã€PM10ã€O3ç§»åŠ¨60æ¬¡
 % 
-% %%%%½«±±¾©aqi-meo×Ü±í°´ÕÕaqiÕ¾µã½øĞĞ·Ö×é
+% %%%%å°†åŒ—äº¬aqi-meoæ€»è¡¨æŒ‰ç…§aqiç«™ç‚¹è¿›è¡Œåˆ†ç»„
 % BJ=BJ_temperature;
 % tic
-% temp_aqi_station=table2cell(BJ(1,1)); %³õÊ¼»¯µÚÒ»¸öÓÃÓÚ·ÖÀàµÄaqi_station
-% BJ_data=cell(200,size(BJ,2),35);%³õÊ¼»¯ÈıÎ¬Ôª°ûÊı×é
-% BJ_num=1;%Õ¾µãÊıÄ¿
-% j=1;%¼ÇÂ¼Ñ­»·ÖĞÃ¿¸ö¶şÎ¬Ôª°ûÊı×éÀïÃæĞĞºÅ
+% temp_aqi_station=table2cell(BJ(1,1)); %åˆå§‹åŒ–ç¬¬ä¸€ä¸ªç”¨äºåˆ†ç±»çš„aqi_station
+% BJ_data=cell(200,size(BJ,2),35);%åˆå§‹åŒ–ä¸‰ç»´å…ƒèƒæ•°ç»„
+% BJ_num=1;%ç«™ç‚¹æ•°ç›®
+% j=1;%è®°å½•å¾ªç¯ä¸­æ¯ä¸ªäºŒç»´å…ƒèƒæ•°ç»„é‡Œé¢è¡Œå·
 % for i = 1:size(BJ,1)
-%       if mod(i,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+%       if mod(i,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
 %        i  
 %       end
 %       if isequal(temp_aqi_station, table2cell(BJ(i,1)))
@@ -779,9 +781,9 @@ toc
 % for i=1:BJ_num
 %     i
 %     for j=1:size(BJ_data(:,:,i),1)-1
-%         BJ_data(j,177,i)=BJ_data(j+1,65,i); %%½«±äÁ¿ÒÆÏòÓÒÏòÉÏÒÆ¶¯
-%         BJ_data(j,178,i)=BJ_data(j+1,66,i); %%½«±äÁ¿ÒÆÏòÓÒÏòÉÏÒÆ¶¯
-%         BJ_data(j,179,i)=BJ_data(j+1,67,i); %%½«±äÁ¿ÒÆÏòÓÒÏòÉÏÒÆ¶¯
+%         BJ_data(j,177,i)=BJ_data(j+1,65,i); %%å°†å˜é‡ç§»å‘å³å‘ä¸Šç§»åŠ¨
+%         BJ_data(j,178,i)=BJ_data(j+1,66,i); %%å°†å˜é‡ç§»å‘å³å‘ä¸Šç§»åŠ¨
+%         BJ_data(j,179,i)=BJ_data(j+1,67,i); %%å°†å˜é‡ç§»å‘å³å‘ä¸Šç§»åŠ¨
 %     end
 % end
 % toc
@@ -792,15 +794,15 @@ toc
 %     i
 %     for k=1:hour
 %         for j=1:size(BJ_data(:,:,i),1)-1
-%     BJ_data(j,180+3*(k-1),i)=BJ_data(j+1,177+3*(k-1),i); %%½«±äÁ¿ÒÆÏòÓÒÏòÉÏÒÆ¶¯
-%     BJ_data(j,181+3*(k-1),i)=BJ_data(j+1,178+3*(k-1),i); %%½«±äÁ¿ÒÆÏòÓÒÏòÉÏÒÆ¶¯
-%     BJ_data(j,182+3*(k-1),i)=BJ_data(j+1,179+3*(k-1),i); %%½«±äÁ¿ÒÆÏòÓÒÏòÉÏÒÆ¶¯
+%     BJ_data(j,180+3*(k-1),i)=BJ_data(j+1,177+3*(k-1),i); %%å°†å˜é‡ç§»å‘å³å‘ä¸Šç§»åŠ¨
+%     BJ_data(j,181+3*(k-1),i)=BJ_data(j+1,178+3*(k-1),i); %%å°†å˜é‡ç§»å‘å³å‘ä¸Šç§»åŠ¨
+%     BJ_data(j,182+3*(k-1),i)=BJ_data(j+1,179+3*(k-1),i); %%å°†å˜é‡ç§»å‘å³å‘ä¸Šç§»åŠ¨
 %         end
 %     end
 %  end
 %  toc
 % 
-% %ºÏ²¢³ÉÒÆ¶¯¹ıºóµÄaqi-meo×Ü±í
+% %åˆå¹¶æˆç§»åŠ¨è¿‡åçš„aqi-meoæ€»è¡¨
 % tic
 % BJ_temperature_new=BJ_data(:,:,1);
 % for j=2:BJ_num
@@ -812,7 +814,7 @@ toc
 % 
 % BJ_temperature_new=cell2table(BJ_temperature_new);
 % 
-% %%%¼ÇµÃĞŞ¸Ä±£´æÎÄ¼şÃû³Æ£¬µ¼³öºóÒªÉ¾³ı×îºóÒ»ÁĞÀïÃæµÄ¿Õ°×ĞĞ
+% %%%è®°å¾—ä¿®æ”¹ä¿å­˜æ–‡ä»¶åç§°ï¼Œå¯¼å‡ºåè¦åˆ é™¤æœ€åä¸€åˆ—é‡Œé¢çš„ç©ºç™½è¡Œ
 % tic
 % writetable(BJ_temperature_new,'BJ_all_month_aqi_meo_75_model_train_new.csv','Delimiter',',','QuoteStrings',true)
 % toc
