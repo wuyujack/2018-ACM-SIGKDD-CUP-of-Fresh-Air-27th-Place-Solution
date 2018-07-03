@@ -1,6 +1,8 @@
+%%% author: Jason Leung
+
 function temp_BJ_data_new=BJ_knn_full_aqi_station(temp_BJ_data)
 
-%%%¼ÆËãtemp_BJ_dataµÄ·Ç¿ÕĞĞÊı
+%%%è®¡ç®—temp_BJ_dataçš„éç©ºè¡Œæ•°
 BJ_empty=double(1);
 k=0;
 
@@ -12,7 +14,7 @@ k=0;
          k=0; 
  end
      
- %%%¼ÆËãtemp_BJ_dataµÄ¾àÀë¾ØÕó
+ %%%è®¡ç®—temp_BJ_dataçš„è·ç¦»çŸ©é˜µ
  BJ_temp_dist=cell(size(BJ_empty,1),size(BJ_empty,1));
  
  k=1;
@@ -27,24 +29,24 @@ k=0;
     k=1;
  end
  
- %%%Èç¹û·¢ÏÖÄ³Ò»ÁĞ³öÏÖNaN£¬ÄÇÃ´¾ÍÀûÓÃ¾àÀë¾ØÕó£¬ÕÒ³ö¸Ã¿ÕÆøÖÊÁ¿Õ¾µÄ×î½üµÄ4¸öÕ¾µã
- %%%ÀûÓÃ·´¾àÀë¼ÓÈ¨Çó½âPM2.5¡¢PM10¡¢O3
+ %%%å¦‚æœå‘ç°æŸä¸€åˆ—å‡ºç°NaNï¼Œé‚£ä¹ˆå°±åˆ©ç”¨è·ç¦»çŸ©é˜µï¼Œæ‰¾å‡ºè¯¥ç©ºæ°”è´¨é‡ç«™çš„æœ€è¿‘çš„4ä¸ªç«™ç‚¹
+ %%%åˆ©ç”¨åè·ç¦»åŠ æƒæ±‚è§£PM2.5ã€PM10ã€O3
  
- k=4; %½üÁÚÊı´óÓÚµÈÓÚ2
- h=2; %·´¾àÀëµÄ¾àÀëµÄÃİÊı
+ k=4; %è¿‘é‚»æ•°å¤§äºç­‰äº2
+ h=2; %åè·ç¦»çš„è·ç¦»çš„å¹‚æ•°
  j=1;
  temp_BJ_data_new=temp_BJ_data(:,1:15);
  
-    for i=1:size(temp_BJ_data,1)%¶Ô35¸ö¿ÕÆøÖÊÁ¿Õ¾·Ö±ğ
+    for i=1:size(temp_BJ_data,1)%å¯¹35ä¸ªç©ºæ°”è´¨é‡ç«™åˆ†åˆ«
         
-       for l=3:k+2 %kÊÇ¹æ¶¨µÄÑ¡ÔñµÄ×î´ó½üÁÚµÄÆøÏó¹Û²âÕ¾µÄ¸öÊı,ÓÉÓÚµÚ1¸ö¾àÀëÊÇ0£¬Òò´ËÒª´ÓµÚ¶ş¿ªÊ¼
-                        [~,n]=find(cell2mat(temp_BJ_data(i,16:50))==cell2mat(BJ_temp_dist(i,l-1)));%±£Áô×î½üÁÚ·çËÙ²¢ÇÒ´Ól¿ªÊ¼Ñ­»·Ñ°ÕÒ¾àÀë¿ÕÆøÖÊÁ¿Õ¾¸üÔ¶µÄÆøÏó¹Û²âÕ¾
-                        temp_BJ_data_new(i,16+(j-1)*12)=temp_BJ_data(n,1);%Õ¾µãÃû³Æ
-                        temp_BJ_data_new(i,17+(j-1)*12)=temp_BJ_data(n,5);%ÎÂ¶È
-                        temp_BJ_data_new(i,18+(j-1)*12)=temp_BJ_data(n,6);%Ñ¹Ç¿
-                        temp_BJ_data_new(i,19+(j-1)*12)=temp_BJ_data(n,7);%Êª¶È
-                        temp_BJ_data_new(i,20+(j-1)*12)=temp_BJ_data(n,8);%·çËÙ
-                        temp_BJ_data_new(i,21+(j-1)*12)=temp_BJ_data(n,15);%·çÏò
+       for l=3:k+2 %kæ˜¯è§„å®šçš„é€‰æ‹©çš„æœ€å¤§è¿‘é‚»çš„æ°”è±¡è§‚æµ‹ç«™çš„ä¸ªæ•°,ç”±äºç¬¬1ä¸ªè·ç¦»æ˜¯0ï¼Œå› æ­¤è¦ä»ç¬¬äºŒå¼€å§‹
+                        [~,n]=find(cell2mat(temp_BJ_data(i,16:50))==cell2mat(BJ_temp_dist(i,l-1)));%ä¿ç•™æœ€è¿‘é‚»é£é€Ÿå¹¶ä¸”ä»lå¼€å§‹å¾ªç¯å¯»æ‰¾è·ç¦»ç©ºæ°”è´¨é‡ç«™æ›´è¿œçš„æ°”è±¡è§‚æµ‹ç«™
+                        temp_BJ_data_new(i,16+(j-1)*12)=temp_BJ_data(n,1);%ç«™ç‚¹åç§°
+                        temp_BJ_data_new(i,17+(j-1)*12)=temp_BJ_data(n,5);%æ¸©åº¦
+                        temp_BJ_data_new(i,18+(j-1)*12)=temp_BJ_data(n,6);%å‹å¼º
+                        temp_BJ_data_new(i,19+(j-1)*12)=temp_BJ_data(n,7);%æ¹¿åº¦
+                        temp_BJ_data_new(i,20+(j-1)*12)=temp_BJ_data(n,8);%é£é€Ÿ
+                        temp_BJ_data_new(i,21+(j-1)*12)=temp_BJ_data(n,15);%é£å‘
                         temp_BJ_data_new(i,22+(j-1)*12)=temp_BJ_data(n,9);%PM2.5
                         temp_BJ_data_new(i,23+(j-1)*12)=temp_BJ_data(n,10);%PM10
                         temp_BJ_data_new(i,24+(j-1)*12)=temp_BJ_data(n,11);%O3
