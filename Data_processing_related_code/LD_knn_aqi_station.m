@@ -1,5 +1,7 @@
+%%% author: Jason Leung
+
 function temp_LD_data_new_1=LD_knn_aqi_station(temp_LD_data)
-%%%¼ÆËãtemp_LD_dataµÄ·Ç¿ÕĞĞÊı
+%%%è®¡ç®—temp_LD_dataçš„éç©ºè¡Œæ•°
 
 LD_empty=0;
  for j=1:size(temp_LD_data,1)
@@ -11,7 +13,7 @@ LD_empty=0;
  LD_num=size(temp_LD_data,2);
  LD_num_1=LD_empty;
  
- %%%¼ÆËãtemp_LD_dataµÄ¾àÀë¾ØÕó
+ %%%è®¡ç®—temp_LD_dataçš„è·ç¦»çŸ©é˜µ
  LD_temp_dist=cell(LD_empty,LD_empty);
  k=1;
  for i=1:LD_empty
@@ -24,24 +26,24 @@ LD_empty=0;
     LD_temp_dist(i,1:size(LD_temp_dist,2))=num2cell(sort(cell2mat(temp_LD_data(i,13:size(LD_temp_dist,2)+12))));
     k=1;
  end
- k=4; %½üÁÚÊı´óÓÚµÈÓÚ2
- h=2; %·´¾àÀëµÄ¾àÀëµÄÃİÊı
+ k=4; %è¿‘é‚»æ•°å¤§äºç­‰äº2
+ h=2; %åè·ç¦»çš„è·ç¦»çš„å¹‚æ•°
  j=1;
  temp_LD_data_new_1=temp_LD_data(:,1:12);
  
-    for i=1:LD_empty%¶Ô35¸ö¿ÕÆøÖÊÁ¿Õ¾·Ö±ğ
+    for i=1:LD_empty%å¯¹35ä¸ªç©ºæ°”è´¨é‡ç«™åˆ†åˆ«
         
-       for l=3:k+2 %kÊÇ¹æ¶¨µÄÑ¡ÔñµÄ×î´ó½üÁÚµÄÆøÏó¹Û²âÕ¾µÄ¸öÊı,ÓÉÓÚµÚ1¸ö¾àÀëÊÇ0£¬Òò´ËÒª´ÓµÚ¶ş¿ªÊ¼
-                        [~,n]=find(cell2mat(temp_LD_data(i,13:12+LD_empty))==cell2mat(LD_temp_dist(i,l-1)));%±£Áô×î½üÁÚ·çËÙ²¢ÇÒ´Ól¿ªÊ¼Ñ­»·Ñ°ÕÒ¾àÀë¿ÕÆøÖÊÁ¿Õ¾¸üÔ¶µÄÆøÏó¹Û²âÕ¾
+       for l=3:k+2 %kæ˜¯è§„å®šçš„é€‰æ‹©çš„æœ€å¤§è¿‘é‚»çš„æ°”è±¡è§‚æµ‹ç«™çš„ä¸ªæ•°,ç”±äºç¬¬1ä¸ªè·ç¦»æ˜¯0ï¼Œå› æ­¤è¦ä»ç¬¬äºŒå¼€å§‹
+                        [~,n]=find(cell2mat(temp_LD_data(i,13:12+LD_empty))==cell2mat(LD_temp_dist(i,l-1)));%ä¿ç•™æœ€è¿‘é‚»é£é€Ÿå¹¶ä¸”ä»lå¼€å§‹å¾ªç¯å¯»æ‰¾è·ç¦»ç©ºæ°”è´¨é‡ç«™æ›´è¿œçš„æ°”è±¡è§‚æµ‹ç«™
                         if size(n,2)==2
-                            n=n(1); %%%ÓÉÓÚÂ×¶ØÓĞ2¶Ô£¬¹²4¸öÕ¾µãÊÇÍ¬¾­Î³¶ÈµÄ£¬Òò´ËÑ°ÕÒµÄÊ±ºò»áÕÒµ½Á½¸öÎ»ÖÃ£¬µ¼ÖÂ±¨´í
+                            n=n(1); %%%ç”±äºä¼¦æ•¦æœ‰2å¯¹ï¼Œå…±4ä¸ªç«™ç‚¹æ˜¯åŒç»çº¬åº¦çš„ï¼Œå› æ­¤å¯»æ‰¾çš„æ—¶å€™ä¼šæ‰¾åˆ°ä¸¤ä¸ªä½ç½®ï¼Œå¯¼è‡´æŠ¥é”™
                         end
-                        temp_LD_data_new_1(i,13+(j-1)*6)=temp_LD_data(n,1);%Õ¾µãÃû³Æ
+                        temp_LD_data_new_1(i,13+(j-1)*6)=temp_LD_data(n,1);%ç«™ç‚¹åç§°
                         temp_LD_data_new_1(i,14+(j-1)*6)=temp_LD_data(n,9);%PM2.5
                         temp_LD_data_new_1(i,15+(j-1)*6)=temp_LD_data(n,10);%PM10
                         temp_LD_data_new_1(i,16+(j-1)*6)=temp_LD_data(n,11);%O3
-                        temp_LD_data_new_1(i,17+(j-1)*6)=temp_LD_data(n,8);%·çËÙ
-                        temp_LD_data_new_1(i,18+(j-1)*6)=temp_LD_data(n,12);%·çÏò
+                        temp_LD_data_new_1(i,17+(j-1)*6)=temp_LD_data(n,8);%é£é€Ÿ
+                        temp_LD_data_new_1(i,18+(j-1)*6)=temp_LD_data(n,12);%é£å‘
                         j=j+1;
        end
        j=1;
