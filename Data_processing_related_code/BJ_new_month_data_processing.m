@@ -1,18 +1,20 @@
+%%% author: Jason Leung
+
 clear
 tic
 %BJ=readtable('bj_meteorology_2018-03-04-12_clean.csv');
-%BJ=readtable('beijing_201802_201804_me.csv');%%%Ôö¼ÓÁËÌìÆø±äÁ¿
-%BJ=readtable('bj_meo_2018-04-30-05-11.csv');%%%Ôö¼ÓÁËÌìÆø±äÁ¿
-BJ=readtable('bj_meo_2018-05-11-20.csv');%%%Ôö¼ÓÁËÌìÆø±äÁ¿
+%BJ=readtable('beijing_201802_201804_me.csv');%%%å¢åŠ äº†å¤©æ°”å˜é‡
+%BJ=readtable('bj_meo_2018-04-30-05-11.csv');%%%å¢åŠ äº†å¤©æ°”å˜é‡
+BJ=readtable('bj_meo_2018-05-11-20.csv');%%%å¢åŠ äº†å¤©æ°”å˜é‡
 toc
 
 tic
-temp_station_id=table2cell(BJ(1,1)); %³õÊ¼»¯µÚÒ»¸öÓÃÓÚ·ÖÀàµÄstaion_id
-BJ_data=cell(10,8,17);%³õÊ¼»¯ÈıÎ¬Ôª°ûÊı×é, ×¢ÒâµÚÒ»¸öÎ»ÖÃµÄÖµÒªµ÷ÕûÒ»ÏÂ£¬¼´Ã¿¸öÔª°ûµÄĞĞÊı
-BJ_num=1;%Õ¾µãÊıÄ¿
-j=1;%¼ÇÂ¼Ñ­»·ÖĞÃ¿¸ö¶şÎ¬Ôª°ûÊı×éÀïÃæĞĞºÅ
+temp_station_id=table2cell(BJ(1,1)); %åˆå§‹åŒ–ç¬¬ä¸€ä¸ªç”¨äºåˆ†ç±»çš„staion_id
+BJ_data=cell(10,8,17);%åˆå§‹åŒ–ä¸‰ç»´å…ƒèƒæ•°ç»„, æ³¨æ„ç¬¬ä¸€ä¸ªä½ç½®çš„å€¼è¦è°ƒæ•´ä¸€ä¸‹ï¼Œå³æ¯ä¸ªå…ƒèƒçš„è¡Œæ•°
+BJ_num=1;%ç«™ç‚¹æ•°ç›®
+j=1;%è®°å½•å¾ªç¯ä¸­æ¯ä¸ªäºŒç»´å…ƒèƒæ•°ç»„é‡Œé¢è¡Œå·
 for i = 1:size(BJ,1)
-      if mod(i,1000)==0 %¹Û²âËã·¨µÄÔËËãËÙ¶È
+      if mod(i,1000)==0 %è§‚æµ‹ç®—æ³•çš„è¿ç®—é€Ÿåº¦
        i  
       end
       if isequal(temp_station_id, table2cell(BJ(i,1)))
@@ -27,7 +29,7 @@ for i = 1:size(BJ,1)
 end
 toc
 
-%%½«¿ÕÆøÖÊÁ¿Õ¾µÄ¾­Î³¶È°´ÕÕÕ¾µã¸´ÖÆµ½BJ_dataµÄÃ¿Ò»¸ö×Ó±íÀïÃæ
+%%å°†ç©ºæ°”è´¨é‡ç«™çš„ç»çº¬åº¦æŒ‰ç…§ç«™ç‚¹å¤åˆ¶åˆ°BJ_dataçš„æ¯ä¸€ä¸ªå­è¡¨é‡Œé¢
 
 % tic
 % BJ_new=BJ_data(:,:,1);
@@ -38,8 +40,8 @@ toc
 % 
 % toc
 
-%%½«¿ÕÆø¹Û²âÕ¾µÄÃû³Æ¼ÓÈëµ½BJ_data±íµÄµÚ8,9ÁĞ
-[d,e,f]=xlsread('station_meo');%µ¼ÈëÆøÏó¹Û²âÕ¾µÄ¾­Î³¶È×ø±ê
+%%å°†ç©ºæ°”è§‚æµ‹ç«™çš„åç§°åŠ å…¥åˆ°BJ_dataè¡¨çš„ç¬¬8,9åˆ—
+[d,e,f]=xlsread('station_meo');%å¯¼å…¥æ°”è±¡è§‚æµ‹ç«™çš„ç»çº¬åº¦åæ ‡
 for i=1:size(BJ_data,3)
    
      BJ_data(1:size(BJ_data(:,:,i),1),9:10,i)=repmat(f(i+1,2:3),size(BJ_data(:,:,i),1),1);
@@ -55,7 +57,7 @@ end
 
 toc
 
-%%%µ¼³ö´øÓĞ¾­Î³¶ÈµÄ±±¾©4ÔÂ·İÊı¾İ±í
+%%%å¯¼å‡ºå¸¦æœ‰ç»çº¬åº¦çš„åŒ—äº¬4æœˆä»½æ•°æ®è¡¨
 BJ_new=cell2table(BJ_new);
 BJ_new = BJ_new(:,[1 9 2:8 end]);
 BJ_new = BJ_new(:,[1:2 10 3:9]);
@@ -66,9 +68,9 @@ tic
 writetable(BJ_new,'bj_meo_2018-05-11-20_with_location_weather.csv','Delimiter',',','QuoteStrings',true)
 toc
 
-%%% °´ÕÕÏà¹Ø¹ØÏµÕûÀí³ö5ÕÅ±í¸ñ
+%%% æŒ‰ç…§ç›¸å…³å…³ç³»æ•´ç†å‡º5å¼ è¡¨æ ¼
 
-%%% Êª¶È£ºÎÂ¶È
+%%% æ¹¿åº¦ï¼šæ¸©åº¦
 
 BJ_humidity=BJ_new;
 BJ_humidity=cell2table(BJ_humidity);
@@ -80,7 +82,7 @@ BJ_humidity = BJ_humidity(:,[1 5 2:4 end]);
 BJ_humidity = BJ_humidity(:,[1:2 6 3:5]);
 toc
 
-%%% Ñ¹Ç¿£ºÎÂ¶È£¬·çËÙ
+%%% å‹å¼ºï¼šæ¸©åº¦ï¼Œé£é€Ÿ
 
 BJ_pressure=BJ_new;
 BJ_pressure=cell2table(BJ_pressure);
@@ -95,7 +97,7 @@ tic
 writetable(BJ_pressure,'BJ_pressure_new_month.csv','Delimiter',',','QuoteStrings',true)
 toc
 
-%%% ÎÂ¶È£ºÑ¹Ç¿£¬Êª¶È
+%%% æ¸©åº¦ï¼šå‹å¼ºï¼Œæ¹¿åº¦
 
 BJ_new=BJ_new;
 BJ_new=cell2table(BJ_new);
@@ -108,7 +110,7 @@ tic
 writetable(BJ_new,'BJ_temperature_new_month.csv','Delimiter',',','QuoteStrings',true)
 toc
 
-%%% ·çÏò£ºÑ¹Ç¿
+%%% é£å‘ï¼šå‹å¼º
 
 BJ_winddirection=BJ_new;
 BJ_winddirection=cell2table(BJ_winddirection);
@@ -122,7 +124,7 @@ tic
 writetable(BJ_winddirection,'BJ_winddirection_new_month.csv','Delimiter',',','QuoteStrings',true)
 toc
 
-%%% ·çËÙ£ºÎÂ¶È£¬Ñ¹Ç¿
+%%% é£é€Ÿï¼šæ¸©åº¦ï¼Œå‹å¼º
 
 BJ_windspeed=BJ_new;
 BJ_windspeed=cell2table(BJ_windspeed);
