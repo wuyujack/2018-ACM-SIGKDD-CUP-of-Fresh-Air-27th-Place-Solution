@@ -106,20 +106,24 @@ def xsdf(true,sub2):
 true = get_true('2018-06-01 00:00:00')
 sub2 = pd.read_csv(r'F:\6_1_6\result_total_feature_pinjie.csv')
 
-#添加hour列
+# 添加hour列
+# Add hour column
 sub2['hour']=0
 for i in range(0,48):
     for j in range(0,48):
         sub2.ix[[i*48+j],['hour']]=j
 
-#添加city列
+# 添加city列
+# Add city column
 sub2['city']='bj'
 for i in range(1680,2304):
     sub2.ix[[i],['city']]='ld'
 
 f = open(r'F:\6_1_6\result_total_feature_pinjie.txt','w')
 
-#按小时输出结果（i代表前i小时）
+# 按小时输出结果（i代表前i小时）
+# print the prediction result according to the hour, here i represents first i hours.
+
 print('hour,','result_item,','PM2.5(/total_result),','PM10,','O3(/len),','len',file=f)
 for i in range(0,48):
     true_bj=true[(true['hour'] <= i) & (true['city']=='bj')]
