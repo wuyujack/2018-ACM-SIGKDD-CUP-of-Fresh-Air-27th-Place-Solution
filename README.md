@@ -7,7 +7,7 @@ You can also refer to my teammates' github:
 
   dedekinds(hzz): [dedekinds](https://github.com/dedekinds)
 
-  ak2400: [chaingyt](https://github.com/chaingyt)
+  ak2400: [chaing233](https://github.com/chaing233)
 
 Here is our submission record from April 1st, 2018 to May 31st, 2018:
 <p align='center'>
