@@ -1,5 +1,5 @@
 # 2018-ACM-SIGKDD-CUP-of-Fresh-Air-Solution
-My team's (保O冲M) solution of 2018 ACM SIGKDD CUP of Fresh Air . We ranked 27/4188 in [final Leaderboard](https://biendata.com/competition/kdd_2018/ranking_list/).
+My team's (保O冲M) solution of 2018 ACM SIGKDD CUP of Fresh Air . We ranked 27/4188 in [final Leaderboard](https://www.biendata.xyz/competition/kdd_2018/ranking_list/).
 
 You can also refer to my teammates' github: 
 
