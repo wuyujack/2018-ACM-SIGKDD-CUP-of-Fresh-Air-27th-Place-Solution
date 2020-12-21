@@ -3,7 +3,7 @@ My team's (保O冲M) solution of 2018 ACM SIGKDD CUP of Fresh Air . We ranked 27
 
 You can also refer to my teammates' github: 
 
-  wuyujack(Liang Mingfu): [wuyujack](https://github.com/wuyujack)
+  wuyujack(Liang Mingfu): [wuyujack](https://wuyujack.github.io/)
 
   dedekinds(hzz): [dedekinds](https://github.com/dedekinds)
 
